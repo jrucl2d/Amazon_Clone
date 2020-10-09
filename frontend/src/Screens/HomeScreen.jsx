@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { listProducts } from "../actions/productActions";
 
 function HomeScreen() {
-  const productList = useSelector((state) => state.productList);
+  const productList = useSelector((state) => state.productList, shallowEqual); // 여기서는 하나뿐이라 shallowEqual 없어도 되긴 한다.
   const { products, loading, error } = productList;
   const dispatch = useDispatch();
 
