@@ -9,14 +9,26 @@ import {
 
 function ProductsScreen() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [id, setId] = useState("");
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [image, setImage] = useState("");
-  const [brand, setBrand] = useState("");
-  const [category, setCategory] = useState("");
-  const [countInStock, setCountInStock] = useState("");
-  const [description, setDescription] = useState("");
+  const [productData, setProductData] = useState({
+    id: "",
+    name: "",
+    price: 0,
+    image: "",
+    brand: "",
+    category: "",
+    countInStock: 0,
+    description: "",
+  });
+  const {
+    id,
+    name,
+    price,
+    image,
+    brand,
+    category,
+    countInStock,
+    description,
+  } = productData;
   const [uploading, setUploading] = useState(false);
   const productList = useSelector((state) => state.productList);
   const { loading, products, error } = productList;
@@ -48,14 +60,16 @@ function ProductsScreen() {
 
   const openModal = (product) => {
     setModalVisible(true);
-    setId(product._id);
-    setName(product.name);
-    setPrice(product.price);
-    setDescription(product.description);
-    setImage(product.image);
-    setBrand(product.brand);
-    setCategory(product.category);
-    setCountInStock(product.countInStock);
+    setProductData({
+      id: product._id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      brand: product.brand,
+      category: product.category,
+      countInStock: product.countInStock,
+      description: product.description,
+    });
   };
   const submitHandler = (e) => {
     e.preventDefault();
@@ -87,13 +101,22 @@ function ProductsScreen() {
         },
       })
       .then((response) => {
-        setImage(response.data);
+        setProductData({
+          ...productData,
+          image: response.data,
+        });
         setUploading(false);
       })
       .catch((err) => {
         console.log(err);
         setUploading(false);
       });
+  };
+  const onChangeData = (e) => {
+    setProductData({
+      ...productData,
+      [e.target.name]: e.target.value,
+    });
   };
 
   return (
@@ -115,7 +138,6 @@ function ProductsScreen() {
                 {loadingSave && <div>Loading...</div>}
                 {errorSave && <div>{errorSave}</div>}
               </li>
-
               <li>
                 <label htmlFor="name">Name</label>
                 <input
@@ -123,7 +145,7 @@ function ProductsScreen() {
                   name="name"
                   value={name}
                   id="name"
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={onChangeData}
                 ></input>
               </li>
               <li>
@@ -133,7 +155,7 @@ function ProductsScreen() {
                   name="price"
                   value={price}
                   id="price"
-                  onChange={(e) => setPrice(e.target.value)}
+                  onChange={onChangeData}
                 ></input>
               </li>
               <li>
@@ -143,7 +165,7 @@ function ProductsScreen() {
                   name="image"
                   value={image}
                   id="image"
-                  onChange={(e) => setImage(e.target.value)}
+                  onChange={onChangeData}
                 ></input>
                 <input type="file" onChange={uploadFileHandler}></input>
                 {uploading && <div>Uploading...</div>}
@@ -155,7 +177,7 @@ function ProductsScreen() {
                   name="brand"
                   value={brand}
                   id="brand"
-                  onChange={(e) => setBrand(e.target.value)}
+                  onChange={onChangeData}
                 ></input>
               </li>
               <li>
@@ -165,7 +187,7 @@ function ProductsScreen() {
                   name="countInStock"
                   value={countInStock}
                   id="countInStock"
-                  onChange={(e) => setCountInStock(e.target.value)}
+                  onChange={onChangeData}
                 ></input>
               </li>
               <li>
@@ -175,7 +197,7 @@ function ProductsScreen() {
                   name="category"
                   value={category}
                   id="category"
-                  onChange={(e) => setCategory(e.target.value)}
+                  onChange={onChangeData}
                 ></input>
               </li>
               <li>
@@ -184,7 +206,7 @@ function ProductsScreen() {
                   name="description"
                   value={description}
                   id="description"
-                  onChange={(e) => setDescription(e.target.value)}
+                  onChange={onChangeData}
                 ></textarea>
               </li>
               <li>
