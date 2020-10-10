@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import config from "./config";
 import mongoose from "mongoose";
 import userRouter from "./routes/userRoute";
+import productRouter from "./routes/productRoute";
 const app = express();
 
 app.use(express.json());
@@ -19,18 +20,7 @@ mongoose
 
 app.use("/api/users", userRouter);
 
-app.get("/api/products", (req, res, next) => {
-  res.send(data.products);
-});
-app.get("/api/products/:id", (req, res, next) => {
-  const productId = req.params.id;
-  const product = data.products.find((x) => x._id === productId);
-  if (product) {
-    res.send(product);
-  } else {
-    res.status(404).send({ msg: "product not found" });
-  }
-});
+app.use("/api/products", productRouter);
 
 app.listen(8000, () => {
   console.log("server is running on port 8000");
