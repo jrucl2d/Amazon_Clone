@@ -3,7 +3,10 @@ import data from "./data";
 import dotenv from "dotenv";
 import config from "./config";
 import mongoose from "mongoose";
+import userRouter from "./routes/userRoute";
 const app = express();
+
+app.use(express.json());
 dotenv.config();
 const mongodbUrl = config.MONGODB_URL;
 mongoose
@@ -14,7 +17,7 @@ mongoose
   })
   .catch((err) => console.log(err.reason));
 
-app.use("/api/users", require("./routes/userRoute"));
+app.use("/api/users", userRouter);
 
 app.get("/api/products", (req, res, next) => {
   res.send(data.products);
