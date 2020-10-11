@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 import RegisterScreen from "./screens/RegisterScrenn";
 import ProductsScreen from "./screens/ProductsScreen";
 import ShippingScreen from "./screens/ShippingScreen";
+import PaymentScreen from "./screens/PaymentScreen";
+import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 
 function App() {
   const { userInfo } = useSelector((state) => state.userSignin);
@@ -57,6 +59,8 @@ function App() {
             <Route path="/products" component={ProductsScreen} />
             <Route path="/signin" component={SigninScrenn} />
             <Route path="/shipping" component={ShippingScreen} />
+            <Route path="/payment" component={PaymentScreen} />
+            <Route path="/placeorder" component={PlaceOrderScreen} />
           </div>
         </main>
         <footer className="footer">All right reserved.</footer>

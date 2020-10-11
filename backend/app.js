@@ -4,6 +4,7 @@ import config from "./config";
 import mongoose from "mongoose";
 import userRouter from "./routes/userRoute";
 import productRouter from "./routes/productRoute";
+import orderRouter from "./routes/orderRoute";
 const app = express();
 
 app.use(express.json());
@@ -19,6 +20,7 @@ mongoose
 
 app.use("/api/users", userRouter);
 app.use("/api/products", productRouter);
+app.use("/api/orders", orderRouter);
 
 app.listen(8000, () => {
   console.log("server is running on port 8000");
