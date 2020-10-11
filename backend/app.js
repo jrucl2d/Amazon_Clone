@@ -19,7 +19,6 @@ mongoose
   .catch((err) => console.log(err.reason));
 
 app.use("/api/users", userRouter);
-
 app.use("/api/products", productRouter);
 
 app.listen(8000, () => {
